@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="PuppeteerSharp" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Conclave.TransactionBuilderService.TestClient\Conclave.TransactionBuilderService.TestClient.csproj" />
+  </ItemGroup>
+
 </Project>

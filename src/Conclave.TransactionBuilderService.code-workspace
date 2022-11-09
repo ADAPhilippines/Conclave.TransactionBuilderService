@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "Conclave.TransactionBuilderService"
+		},
+		{
+			"path": "Conclave.TransactionBuilderService.TestClient"
+		}
+	],
+	"settings": {}
+}
