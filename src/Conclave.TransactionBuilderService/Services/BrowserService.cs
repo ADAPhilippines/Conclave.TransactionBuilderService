@@ -39,7 +39,7 @@ public class BrowserService : IAsyncDisposable
         _logger.LogInformation("Launching Browser");
         Browser = await Puppeteer.LaunchAsync(new()
         {
-            Headless = true
+            Headless = false
         });
         _logger.LogInformation("Browser launched succesfully.");
         Page = await Browser.NewPageAsync();
