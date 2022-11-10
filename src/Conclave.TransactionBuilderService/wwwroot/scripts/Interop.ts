@@ -4,15 +4,13 @@ import { Transaction } from "ethereumjs-tx";
 window.test = () => " From JS ";
 
 window.sendBaseTokenAsync = async (sendBaseTokenParams) => {
-    const provider = new ethers.providers.JsonRpcProvider(sendBaseTokenParams.ProviderRpcUrl);
-    const gasLimit = ethers.utils.hexlify(sendBaseTokenParams.GasLimit ?? 21000);
-    const gasPrice = ethers.utils.hexlify(sendBaseTokenParams.GasPrice);
-    const nonce = await provider.getTransactionCount(sendBaseTokenParams.FromAddress);
+    const gasLimit = ethers.utils.hexlify(sendBaseTokenParams.gasLimit ?? 21000);
+    const gasPrice = ethers.utils.hexlify(sendBaseTokenParams.gasPrice);
 
     const tx = new Transaction({
-        nonce: ethers.utils.hexlify(nonce),
-        value: ethers.utils.parseEther(sendBaseTokenParams.AmountEth).toHexString(),
-        to: sendBaseTokenParams.ToAddress,
+        nonce: ethers.utils.hexlify(sendBaseTokenParams.nonce),
+        value: ethers.utils.parseEther(sendBaseTokenParams.amountEth).toHexString(),
+        to: sendBaseTokenParams.toAddress,
         gasLimit,
         gasPrice,
     });

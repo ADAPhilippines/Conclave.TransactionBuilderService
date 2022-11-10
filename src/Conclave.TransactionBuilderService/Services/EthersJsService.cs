@@ -1,3 +1,5 @@
+using Conclave.TransctionBuilderService.Models;
+
 namespace Conclave.TransctionBuilderService.Services;
 
 public class EthersJsService
@@ -12,5 +14,10 @@ public class EthersJsService
     public async Task<string?> TestAsync()
     {
         return await _browserService.InvokeFunctionAsync<string>("test");
+    }
+
+    public async Task<string?> SendBaseTokenAsync(SendBaseTokenTxDto sendBaseTokenParams)
+    {
+        return await _browserService.InvokeFunctionAsync<string>("sendBaseTokenAsync", sendBaseTokenParams);
     }
 }
