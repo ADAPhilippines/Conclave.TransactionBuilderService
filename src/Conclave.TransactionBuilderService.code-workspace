@@ -5,9 +5,6 @@
 		},
 		{
 			"path": "Conclave.TransactionBuilderService.TestClient"
-		},
-		{
-			"path": "Conclave.TransactionBuilder.SampleWeb"
 		}
 	],
 	"settings": {}

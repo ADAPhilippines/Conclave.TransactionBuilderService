@@ -1,19 +1,15 @@
 import * as ethers from "ethers";
-import { Transaction } from "ethereumjs-tx";
-
 window.test = () => " From JS ";
 
 window.sendBaseTokenAsync = async (sendBaseTokenParams) => {
     const gasLimit = ethers.utils.hexlify(sendBaseTokenParams.gasLimit ?? 21000);
-    const gasPrice = ethers.utils.hexlify(sendBaseTokenParams.gasPrice);
-
-    const tx = new Transaction({
-        nonce: ethers.utils.hexlify(sendBaseTokenParams.nonce),
+    const gasPrice = ethers.utils.hexlify(ethers.utils.parseUnits(sendBaseTokenParams.gasPrice.toString(), 'gwei'));
+    return ethers.utils.serializeTransaction({
+        chainId: sendBaseTokenParams.chainId,
         value: ethers.utils.parseEther(sendBaseTokenParams.amountEth).toHexString(),
         to: sendBaseTokenParams.toAddress,
         gasLimit,
         gasPrice,
+        nonce: sendBaseTokenParams.nonce
     });
-
-    return tx.serialize().toString('hex');
 };

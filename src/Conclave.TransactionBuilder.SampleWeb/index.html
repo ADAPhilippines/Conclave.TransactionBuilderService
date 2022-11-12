@@ -4,9 +4,11 @@
 <head>
     <!-- This exposes the library as a global variable: ethers -->
     <script type="text/javascript" src="js/signalr/dist/browser/signalr.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/browse/@ethereumjs/tx@4.0.1/dist/index.js"></script>
     <script type="module">
 
         import { ethers } from "/js/ethers-5.5.4.esm.min.js";
+
         window.connectWallet = async () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             await provider.send("eth_requestAccounts", []);
@@ -15,34 +17,36 @@
         };
 
         window.sendEth = async () => {
+
+            // const connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5039/transactionBuilder").build();
+            // await connection.start();
+            // connection.on("SendBaseTokenResult", async (txHex) => {
+            //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+            //     const signer = provider.getSigner();
             
-            const connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5039/transactionBuilder").build();
-            await connection.start();
-            connection.on("SendBaseTokenResult", async (txHex) => {
-                const tx = ethers.utils.parseTransaction(`0x${txHex}`);
-                console.log("tx", tx);
-                const signer = provider.getSigner();
-                const signedTx = signer.signTransaction(tx);
-                console.log(signedTx);
-                const { hash } = await signer.sendTransaction(signedTx);
-                await provider.waitForTransaction(hash);
-                connection.stop();
-            });
+            //     await txResp.wait(1);
+            //     console.log("confirmed: ", txResp.hash);
+            //     connection.stop();
+            // });
 
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const from = await signer.getAddress();
             const nonce = await provider.getTransactionCount(from);
 
+            const tx = ethers.utils.parseTransaction("0xf8490d850df8475800830493e094ca77372a728c09610bcf68a47c71c419888b380d80a46057361d00000000000000000000000000000000000000000000000000000000000009a4808080");
+            tx.nonce = nonce;
+            console.log(tx);
+            const txResp = await signer.sendTransaction(tx);
 
-            connection.invoke("SendBaseToken", JSON.stringify({
-                AmountEth: '1.0',
-                FromAddress: from,
-                ToAddress: from,
-                GasLimit: 3000000,
-                GasPrice: 60,
-                Nonce: nonce
-            }));
+            // connection.invoke("SendBaseToken", JSON.stringify({
+            //     AmountEth: '1.0',
+            //     ToAddress: from,
+            //     GasLimit: 21000,
+            //     GasPrice: 60,
+            //     Nonce: nonce,
+            //     chainId: 200101
+            // }));
         }
 
 
